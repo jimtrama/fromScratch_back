@@ -1,12 +1,19 @@
 const express = require("express");
 const fs = require("fs");
 const app = express();
+const bodyParser = require('body-parser');
 const port = 3000;
+const DILIMITER = ':';
 
+app.use(bodyParser.json());
+app.use(
+  bodyParser.urlencoded({
+    extended: true,
+  }),
+);
 app.get("/participants", (req, res) => {
   const users = [];
   let userStarting = false;
-  res.setHeader("Access-Control-Allow-Origin","*")
 
   const lineReader = require("readline").createInterface({
     input: fs.createReadStream("data.txt"),
@@ -34,32 +41,64 @@ app.get("/participants", (req, res) => {
 });
 
 app.post("/participant", (req, res) => {
-  res.send("Hello, World!");
+  console.log(req.body);
+  
+  const firstName = req.body?.firstName || "";
+  const lastName = req.body?.lastName || "";
+  const gitlab = req.body?.gitlab || "";
+  const kaggle = req.body?.kaggle || "";
+  const today = new Date();
+
+  if(!sanitaze(firstName,lastName,gitlab,kaggle))
+  {
+    res.send({error:"Something went wrong"});
+    return;
+  }
+  writeToFile(firstName,lastName,gitlab,kaggle,today);
+  res.send({success:true});
 });
 
-app.get("/", (req, res) => {
 
-    const firstName = "kati";
-    const lastName = "allo";
-    const gitlab = "git";
-    const kaggle = "kaggle";
-    const today = new Date();
-    addLine("<");
-    addLine(`firstName:${firstName}`);
-    addLine(`lastName:${lastName}`);
-    addLine(`gitlab:${gitlab}`);
-    addLine(`kaggle:${kaggle}`);
-    addLine(`registrationDate:${today.getDate()}/${today.getMonth()+1}/${today.getFullYear()}`);
-    addLine(">");
-
-  res.send("Hello, World!");
+app.listen(port, () => {
+  console.log(`Server is running on http://localhost:${port}`);
 });
+
+
+
+
+
+
+
+function writeToFile(firstName, lastName, gitlab, kaggle,today) {
+  addLine("<");
+  addLine(`firstName${DILIMITER}${firstName}`);
+  addLine(`lastName${DILIMITER}${lastName}`);
+  addLine(`gitlab${DILIMITER}${gitlab}`);
+  addLine(`kaggle${DILIMITER}${kaggle}`);
+  const date = `registrationDate${DILIMITER}${today.getDate()}/${
+      today.getMonth() + 1
+    }/${today.getFullYear()}`
+  addLine(date);
+  addLine(">");
+}
+
+function sanitaze(f, l, g, k) {
+  if (f == "" || f.length > 20 || hasDilimiter(f)) return false;
+  if (l == "" || l.length > 20 || hasDilimiter(l)) return false;
+  if (g == "" || g.length > 20 || hasDilimiter(g)) return false;
+  if (k == "" || k.length > 20 || hasDilimiter(k)) return false;
+  return true;
+}
+
+function hasDilimiter(s) {
+  return s.includes(DILIMITER);
+}
 
 function addLine(line) {
   // append data to file
   fs.appendFile(
     "data.txt",
-    line+'\n',
+    line + "\n",
     "utf8",
     // callback function
     function (err) {
@@ -68,6 +107,3 @@ function addLine(line) {
   );
 }
 
-app.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}`);
-});

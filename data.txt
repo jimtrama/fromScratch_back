@@ -26,3 +26,10 @@ firstName:kati
 gitlab:git
 registrationDate:13/10/2024
 >
+<
+firstName:cds
+kaggle:sd
+registrationDate:14/10/2024
+lastName:ds
+gitlab:sd
+>
