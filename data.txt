@@ -1,0 +1,28 @@
+<
+lastName:Chris
+firstName:Zogopoulos
+kaggle:something normal sized
+gitlab:something normal sized
+registrationDate:01/00/1000
+>
+<
+firstName:jim 
+lastName:tram
+kaggle:something normal sized
+gitlab:something normal sized
+registrationDate:00/00/0000
+>
+<
+firstName:ko
+lastName:hello
+kaggle:something normal sized
+gitlab:something normal sized
+registrationDate:00/00/0000
+>
+<
+lastName:allo
+kaggle:kaggle
+firstName:kati
+gitlab:git
+registrationDate:13/10/2024
+>
