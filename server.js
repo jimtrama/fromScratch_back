@@ -24,9 +24,10 @@ app.get("/participants", (req, res) => {
 
   lineReader.on("line", function (line) {
     if (userStarting && (!line.includes("<") || !line.includes("<"))) {
-      const [key, value] = line.split(":");
-      users[userCount][key] = value;
+      const d = line.split(":");
+      users[userCount][d[0]] = d[1];
     }
+
     if (line[0] === "<") {
       userStarting = true;
       users.push({});
@@ -50,7 +51,12 @@ app.post("/participant", (req, res) => {
   const gitlab = req.body?.gitlab || "";
   const kaggle = req.body?.kaggle || "";
   const today = new Date();
-
+  console.log(
+    firstName,
+    lastName,
+    gitlab,
+    kaggle
+  );
   if(!sanitaze(firstName,lastName,gitlab,kaggle))
   {
     res.send({error:"Something went wrong"});
@@ -72,6 +78,12 @@ app.listen(port, () => {
 
 
 function writeToFile(firstName, lastName, gitlab, kaggle,today) {
+  console.log(
+    firstName,
+    lastName,
+    gitlab,
+    kaggle
+  );
   addLine("<");
   addLine(`firstName${DILIMITER}${firstName}`);
   addLine(`lastName${DILIMITER}${lastName}`);
@@ -107,5 +119,6 @@ function addLine(line) {
       if (err) throw err;
     }
   );
+  
 }
 
