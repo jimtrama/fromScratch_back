@@ -23,7 +23,7 @@ app.get("/participants", (req, res) => {
   let userCount = 0;
 
   lineReader.on("line", function (line) {
-    if (userStarting) {
+    if (userStarting && (!line.includes("<") || !line.includes("<"))) {
       const [key, value] = line.split(":");
       users[userCount][key] = value;
     }
