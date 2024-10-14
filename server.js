@@ -83,10 +83,10 @@ function writeToFile(firstName, lastName, gitlab, kaggle,today) {
 }
 
 function sanitaze(f, l, g, k) {
-  if (f == "" || f.length > 20 || hasDilimiter(f)) return false;
-  if (l == "" || l.length > 20 || hasDilimiter(l)) return false;
-  if (g == "" || g.length > 20 || hasDilimiter(g)) return false;
-  if (k == "" || k.length > 20 || hasDilimiter(k)) return false;
+  if (f == "" || f.length > 100 || hasDilimiter(f)) return false;
+  if (l == "" || l.length > 100 || hasDilimiter(l)) return false;
+  if (g == "" || g.length > 200 || hasDilimiter(g)) return false;
+  if (k == "" || k.length > 200 || hasDilimiter(k)) return false;
   return true;
 }
 
