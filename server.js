@@ -2,7 +2,7 @@ const express = require("express");
 const fs = require("fs");
 const app = express();
 const bodyParser = require('body-parser');
-const port = 3000;
+const port = process.env.PORT || 4000;
 const DILIMITER = ':';
 
 app.use(bodyParser.json());
