@@ -1,17 +1,17 @@
 const express = require("express");
 const fs = require("fs");
-const cors = require('cors');
+const cors = require("cors");
 const app = express();
-const bodyParser = require('body-parser');
+const bodyParser = require("body-parser");
 const port = process.env.PORT || 4000;
-const DILIMITER = ':';
+const DILIMITER = ":";
 
 app.use(bodyParser.json());
-app.use(cors())
+app.use(cors());
 app.use(
   bodyParser.urlencoded({
     extended: true,
-  }),
+  })
 );
 app.get("/participants", (req, res) => {
   const users = [];
@@ -43,57 +43,43 @@ app.get("/participants", (req, res) => {
   });
 });
 
-app.post("/participant", (req, res) => {
+app.post("/participant", async (req, res) => {
   console.log(req.body);
-  
+
   const firstName = req.body?.firstName || "";
   const lastName = req.body?.lastName || "";
   const gitlab = req.body?.gitlab || "";
   const kaggle = req.body?.kaggle || "";
-  const today = new Date();
-  console.log(
-    firstName,
-    lastName,
-    gitlab,
-    kaggle
-  );
-  if(!sanitaze(firstName,lastName,gitlab,kaggle))
-  {
-    res.send({error:"Something went wrong"});
+  const date = req.body?.date || "";
+  console.log(firstName, lastName, gitlab, kaggle,date);
+
+  if (!sanitaze(firstName, lastName, gitlab, kaggle)) {
+    res.send({ error: "Something went wrong" });
     return;
   }
-  writeToFile(firstName,lastName,gitlab,kaggle,today);
-  res.send({success:true});
+  await writeToFile(firstName, lastName, gitlab, kaggle, date);
+  res.send({ success: true });
 });
-
 
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
 });
 
+async function writeToFile(firstName, lastName, gitlab, kaggle, date) {
+  console.log(firstName, lastName, gitlab, kaggle,date);
 
+  const today = new Date();
+  const todayString = `${today.getDate()}/${today.getMonth() + 1}/${today.getFullYear()}`;
 
-
-
-
-
-function writeToFile(firstName, lastName, gitlab, kaggle,today) {
-  console.log(
-    firstName,
-    lastName,
-    gitlab,
-    kaggle
-  );
-  addLine("<");
-  addLine(`firstName${DILIMITER}${firstName}`);
-  addLine(`lastName${DILIMITER}${lastName}`);
-  addLine(`gitlab${DILIMITER}${gitlab}`);
-  addLine(`kaggle${DILIMITER}${kaggle}`);
-  const date = `registrationDate${DILIMITER}${today.getDate()}/${
-      today.getMonth() + 1
-    }/${today.getFullYear()}`
-  addLine(date);
-  addLine(">");
+  await addLine("<");
+  await addLine(`firstName${DILIMITER}${firstName}`);
+  await addLine(`lastName${DILIMITER}${lastName}`);
+  await addLine(`gitlab${DILIMITER}${gitlab}`);
+  await addLine(`kaggle${DILIMITER}${kaggle}`);
+  await addLine(`registrationDate${DILIMITER}${todayString}`);
+  await addLine(`bdate${DILIMITER}${date}`);
+  setTimeout(async ()=>{await addLine(">");},10)
+  
 }
 
 function sanitaze(f, l, g, k) {
@@ -108,9 +94,9 @@ function hasDilimiter(s) {
   return s.includes(DILIMITER);
 }
 
-function addLine(line) {
+async function addLine(line) {
   // append data to file
-  fs.appendFile(
+  await fs.appendFile(
     "data.txt",
     line + "\n",
     "utf8",
@@ -119,6 +105,4 @@ function addLine(line) {
       if (err) throw err;
     }
   );
-  
 }
-
