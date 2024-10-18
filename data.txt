@@ -1,8 +1,4 @@
-<
-firstName:fsdg
-lastName:dsfg
-gitlab:re  ret  
-kaggle:fgds erswg
-registrationDate:16/10/2024
-bdate:24/10/2024
->
+{"firstName":"1","lastName":"2","gitlab":"3","kaggle":"4","date":"","gender":"","about":"","thinks":[{"title":"ai","value":true}],"registrationDate":"18/10/2024"}
+
+{"firstName":"1","lastName":"3","gitlab":"4","kaggle":"5","date":"","gender":"","about":"","thinks":[],"registrationDate":"18/10/2024"}
+{"firstName":"a","lastName":"b","gitlab":"c","kaggle":"d","date":"26/10/2024","gender":"female","about":"about me , what ?","thinks":[{"title":"ai","value":true},{"title":"ml","value":true}],"registrationDate":"18/10/2024"}
