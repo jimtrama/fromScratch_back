@@ -51,7 +51,6 @@ app.post("/participant", async (req, res) => {
     const p = new User();
     Object.assign(p, req.body);
     p.thinks = JSON.parse(p.thinks);
-    console.log(p);
 
     if (!p.isOk()) {
         res.send({ error: "Something went wrong, check the form" });
@@ -71,14 +70,14 @@ app.listen(port, () => {
 
 function useAlreadyExists(p){
     for(const u of usersInDb){
-        if(u.kaggel === p.kaggel || u.gitlab === p.gitlab){
+        if(u.kaggel == p.kaggel || u.gitlab == p.gitlab){
             return true;
         }
     }
     return false;
 }
 
-function initFromDbUsers(p){
+function initFromDbUsers(){
     const lineReader = require("readline").createInterface({
         input: fs.createReadStream("data.txt"),
     });
@@ -93,9 +92,7 @@ function initFromDbUsers(p){
       }  
     });
 
-    lineReader.on("close", function () {
-        
-    });
+    lineReader.close();
 }
 
 async function writeToFile(p) {
