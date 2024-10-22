@@ -10,7 +10,7 @@ var logger = fs.createWriteStream("data.txt", {
 });
 var usersInDb = [];
 const corsOptions = {
-    origin: 'https://fromscratch-2e1c9.web.app/',//(https://your-client-app.com)
+    origin: 'https://fromscratch-2e1c9.web.app/*',//(https://your-client-app.com)
     optionsSuccessStatus: 200,
   };
 
