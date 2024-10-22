@@ -9,9 +9,13 @@ var logger = fs.createWriteStream("data.txt", {
     flags: "a", // 'a' means appending (old data will be preserved)
 });
 var usersInDb = [];
+const corsOptions = {
+    origin: 'https://fromscratch-2e1c9.web.app/',//(https://your-client-app.com)
+    optionsSuccessStatus: 200,
+  };
 
 app.use(bodyParser.json());
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(
     bodyParser.urlencoded({
         extended: true,
