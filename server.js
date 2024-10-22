@@ -61,6 +61,7 @@ app.post("/participant", async (req, res) => {
         return;
     }
     await writeToFile(p);
+    usersInDb.push(p);
     res.send({ success: true });
 });
 
