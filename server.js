@@ -74,7 +74,7 @@ app.listen(port, () => {
 
 function useAlreadyExists(p){
     for(const u of usersInDb){
-        if(u.kaggel === p.kaggel || u.gitlab === p.gitlab){
+        if(u.kaggle === p.kaggle || u.gitlab === p.gitlab){
             return true;
         }
     }
