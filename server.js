@@ -63,8 +63,8 @@ app.post("/participant", async (req, res) => {
         res.send({ error: "User already exists, sorry :(" });
         return;
     }
-    await writeToFile(p);
     usersInDb.push(p);
+    await writeToFile(p);
     res.send({ success: true });
 });
 
@@ -74,7 +74,7 @@ app.listen(port, () => {
 
 function useAlreadyExists(p){
     for(const u of usersInDb){
-        if(u.kaggel == p.kaggel || u.gitlab == p.gitlab){
+        if(u.kaggel === p.kaggel || u.gitlab === p.gitlab){
             return true;
         }
     }
