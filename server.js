@@ -95,8 +95,6 @@ function initFromDbUsers(){
         console.log("Error parsinsing data file");
       }  
     });
-
-    lineReader.close();
 }
 
 async function writeToFile(p) {
